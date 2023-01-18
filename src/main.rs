@@ -1,35 +1,38 @@
 fn main() {
-    let mut weight = 0.0;
-    let mut height  = 0.0;
-    let mut line = String::new();
-    println!("Enter your weight :");
-    _ = std::io::stdin().read_line(&mut line).unwrap();
-    let trimmed = line.trim();
-    match trimmed.parse::<f64>() {
-        Ok(i) => {
-            weight = i;
-            println!("your weight input: {}", weight);
-        }
-        Err(..) => println!("weight was not an float: {}", trimmed),
-    };
-
-    println!("Enter your height :");
-    let mut lineh = String::new();
-    _ = std::io::stdin().read_line(&mut lineh).unwrap();
-    let trimmedheight = lineh.trim();
-    match trimmedheight.parse::<f64>() {
-        Ok(i) => {
-            height = i;
-            println!("your height input: {}", height);
-        }
-        Err(..) => println!("height was not an float: {}", trimmed),
-    };
-
-    println!("Your weight and height: {}, {}", weight, height);
-
-    let (bmi, status) = bmi_calculate(weight, height);
-    println!("BMI 身体质量指数: {}", bmi);
-    println!("BODY CONDITION 身体状况: {}", status);
+    loop {
+        let mut weight = 0.0;
+        let mut height  = 0.0;
+        let mut line = String::new();
+        println!("Enter your weight :");
+        _ = std::io::stdin().read_line(&mut line).unwrap();
+        let trimmed = line.trim();
+        match trimmed.parse::<f64>() {
+            Ok(i) => {
+                weight = i;
+                println!("your weight input: {}", weight);
+            }
+            Err(..) => println!("weight was not an float: {}", trimmed),
+        };
+    
+        println!("Enter your height :");
+        let mut lineh = String::new();
+        _ = std::io::stdin().read_line(&mut lineh).unwrap();
+        let trimmedheight = lineh.trim();
+        match trimmedheight.parse::<f64>() {
+            Ok(i) => {
+                height = i;
+                println!("your height input: {}", height);
+            }
+            Err(..) => println!("height was not an float: {}", trimmed),
+        };
+    
+        println!("Your weight and height: {}, {}", weight, height);
+    
+        let (bmi, status) = bmi_calculate(weight, height);
+        println!("BMI 身体质量指数: {}", bmi);
+        println!("BODY CONDITION 身体状况: {}", status);
+    }
+  
 }
 
 fn bmi_calculate(weight: f64, height: f64) -> (f64, &'static str) {
