@@ -1,38 +1,39 @@
+use fltk::{prelude::*, *};
+
 fn main() {
-    loop {
-        let mut weight = 0.0;
-        let mut height  = 0.0;
-        let mut line = String::new();
-        println!("Enter your weight :");
-        _ = std::io::stdin().read_line(&mut line).unwrap();
-        let trimmed = line.trim();
-        match trimmed.parse::<f64>() {
-            Ok(i) => {
-                weight = i;
-                println!("your weight input: {}", weight);
-            }
-            Err(..) => println!("weight was not an float: {}", trimmed),
-        };
-    
-        println!("Enter your height :");
-        let mut lineh = String::new();
-        _ = std::io::stdin().read_line(&mut lineh).unwrap();
-        let trimmedheight = lineh.trim();
-        match trimmedheight.parse::<f64>() {
-            Ok(i) => {
-                height = i;
-                println!("your height input: {}", height);
-            }
-            Err(..) => println!("height was not an float: {}", trimmed),
-        };
-    
-        println!("Your weight and height: {}, {}", weight, height);
-    
-        let (bmi, status) = bmi_calculate(weight, height);
-        println!("BMI 身体质量指数: {}", bmi);
-        println!("BODY CONDITION 身体状况: {}", status);
-    }
-  
+    let a = app::App::default();
+    let mut win = window::Window::default().with_size(400, 300);
+    let flex = group::Flex::default().with_size(200, 200).column().center_of_parent();
+    let label = frame::Frame::default().with_label("Enter weight(kg)");
+    let input = input::FloatInput::default();
+    let label = frame::Frame::default().with_label("Enter height(cm)");
+    let htin = input::FloatInput::default();
+    let mut btn = button::Button::default().with_label("BMI Calculate");
+    let mut bmilb = frame::Frame::default().with_label("BMI ");
+    let mut stlb = frame::Frame::default().with_label("LEVEL ");
+    flex.end();
+    win.end();
+    win.show();
+
+    btn.set_callback(move |btn| {
+        let (bmi, status) = console_cmd(input.value().parse::<f64>().unwrap() , htin.value().parse::<f64>().unwrap());
+        let bstr = format!("BMI {:.2}", bmi);
+        bmilb.set_label(&bstr);
+        stlb.set_label(&format!("{}", status.to_string()));
+    });
+
+    a.run().unwrap();
+}
+fn console_cmd(weight: f64, height: f64)-> (f64, &'static str) {
+    //let mut weight = 0.0;
+    //let mut height  = 0.0;
+
+    println!("Your weight and height: {}, {}", weight, height);
+
+    let (bmi, status) = bmi_calculate(weight, height);
+    println!("BMI 身体质量指数: {}", bmi);
+    println!("BODY CONDITION 身体状况: {}", status);
+    (bmi, status)
 }
 
 fn bmi_calculate(weight: f64, height: f64) -> (f64, &'static str) {
