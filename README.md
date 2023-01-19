@@ -6,4 +6,4 @@ for BMI calculation.
 
 BMI = body mass index
 
-![image](​ https://github.com/pan2za/rustbmi/blob/main/screenshot.png​​)
+![image](​ https://raw.githubusercontent.com/pan2za/rustbmi/main/screenshot.png)
